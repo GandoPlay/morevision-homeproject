@@ -1,0 +1,29 @@
+<div>
+<button (click)="openEditModal(vehicle.id)">edit</button>
+<form nz-form (ngSubmit)="HandleEditSubmit(vehicle.id)">
+
+<nz-modal [nzFooter]="modalFooter" [(nzVisible)]="isEditVisible" nzTitle="Edit vehicle" (nzOnCancel)="handleEditCancel()">
+
+    <ng-container *nzModalContent>
+            <nz-form-item> 
+                <nz-form-control [nzSpan]="14">
+                    <nz-form-label [nzSpan]="6" nzFor="model">model</nz-form-label>
+                    <input nz-input name="model" type="text" id="model" [value]="vehicle?.model" [(ngModel)]="Editedvehicle.model"/>
+                    
+                    <nz-form-label [nzSpan]="14" nzFor="manufacturer">manufacturer</nz-form-label>
+                    <input nz-input name="manufacturer" type="text" id="manufacturer" [value]="vehicle?.manufacturer" [(ngModel)]="Editedvehicle.manufacturer"/>
+                    
+                    <nz-form-label  [nzSpan]="14" nzFor="licensePlate">licensePlate</nz-form-label>
+                    <input nz-input name="licensePlate" type="text" id="licensePlate" [value]="vehicle?.licensePlate" [(ngModel)]="Editedvehicle.licensePlate"/>
+
+                </nz-form-control>
+            </nz-form-item>
+    </ng-container>
+    <ng-template #modalFooter>
+        <button nz-button nzType="default" (click)="handleEditCancel()">Cancel</button>
+        <button nz-button nzType="primary" type="submit" (click) ="HandleEditSubmit(vehicle.id)"  >Submit</button>
+    </ng-template>
+
+</nz-modal>
+</form>
+</div>

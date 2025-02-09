@@ -17,10 +17,11 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { EditModalComponent } from './components/EditModal/EditModal.component';
 import { LoggerModalComponent } from './components/LoggerModal/logger.component';
 import { AddModalComponent } from './components/AddModal/AddModal.component';
+import { AddFleetComponent } from './components/AddFleet/AddFleet.component';
 
 @Component({
   standalone: true,
-  selector: 'app-root',
+  selector: 'main-root',
   imports: [
     RouterOutlet,
     EditModalComponent,
@@ -39,11 +40,12 @@ import { AddModalComponent } from './components/AddModal/AddModal.component';
     NzInputModule,
     LoggerModalComponent,
     AddModalComponent,
+    AddFleetComponent,
   ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  templateUrl: './main.component.html',
+  styleUrl: './main.component.css',
 })
-export class AppComponent {
+export class MainComponent {
   title = 'web';
   vehicles: any;
   selectedFleetId: any;
@@ -66,6 +68,7 @@ export class AppComponent {
       });
     });
   }
+
   onStatusChange(value: any): void {
     this.vehicleService
       .getData(this.selectedFleetId, value !== 'NONE' ? value : null)
@@ -73,8 +76,12 @@ export class AppComponent {
         this.vehicles = data;
       });
   }
-  updateVehicles(newData: string) {
+  updateVehicles(newData: any) {
     this.vehicles = newData;
+  }
+  updateFleets(newData: any) {
+
+    this.fleets = newData;
   }
 
   onStatusLogChange(value: any, id: any): void {
@@ -94,7 +101,7 @@ export class AppComponent {
       this.fleets = fleetsData;
       // Only fetch vehicles after fleets data is available
       if (this.fleets && this.fleets.length > 0) {
-        const fleetId = this.fleets[1].id;
+        const fleetId = this.fleets[0].id;
         this.dataService.getData(fleetId).subscribe((data) => {
           this.vehicles = data;
         });

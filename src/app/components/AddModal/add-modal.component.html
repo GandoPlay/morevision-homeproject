@@ -1,0 +1,69 @@
+<div>
+<button nz-button nzType="primary" [disabled] = "!fleetId" (click)="openModal()">Add Vehicle</button>
+<form nz-form [formGroup]="validateForm" (ngSubmit)="HandleSubmit(fleetId)">
+
+<nz-modal [nzFooter]="modalFooter" [(nzVisible)]="isVisible" nzTitle=" vehicle" (nzOnCancel)="handleCancel()">
+
+    <ng-container *nzModalContent>
+        <nz-form-item> 
+                <nz-form-control [nzSpan]="20">
+                    <nz-form-item> 
+
+                    <nz-form-label [nzSpan]="20" nzFor="model">model</nz-form-label>
+                    <nz-form-control [nzSpan]="20" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="modeErrorTpl">
+                    <input nz-input formControlName="model" name="model" type="text" id="model" [value]="vehicle?.model" [(ngModel)]="vehicle.model" />
+                    <ng-template #modeErrorTpl let-control>
+                    
+                        @if (control.errors?.['required']) {
+                          Model is required
+                        }
+                      </ng-template>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item> 
+
+
+                    <nz-form-control [nzSpan]="20" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="manufacturerErrorTpl">
+                        <nz-form-label [nzSpan]="20" nzFor="manufacturer">manufacturer</nz-form-label>
+
+                        <input nz-input formControlName="manufacturer" name="manufacturer" type="text" id="manufacturer" [value]="vehicle?.manufacturer" [(ngModel)]="vehicle.manufacturer" />
+
+                        <ng-template #manufacturerErrorTpl let-control>
+                        
+                            @if (control.errors?.['required']) {
+                                manufacturer is required
+                            }
+                          </ng-template>
+                        </nz-form-control>
+
+                </nz-form-item>
+                <nz-form-item> 
+
+
+                        <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="licensePlateErrorTpl">
+                            <nz-form-label [nzSpan]="20" nzFor="licensePlate">licensePlate</nz-form-label>
+
+                            <input nz-input formControlName="licensePlate" name="licensePlate" type="text" id="licensePlate" [value]="vehicle?.licensePlate" [(ngModel)]="vehicle.licensePlate" />
+                            <ng-template #licensePlateErrorTpl let-control>
+                            
+                                @if (control.errors?.['required']) {
+                                    licensePlate is required
+                                }
+                              </ng-template>
+                            </nz-form-control>
+                </nz-form-item>
+
+                    
+                 
+                </nz-form-control>
+            </nz-form-item>
+    </ng-container>
+    <ng-template #modalFooter>
+
+        <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+        <button nz-button nzType="primary" [disabled]="!validateForm.valid" type="submit" (click) ="HandleSubmit(fleetId)"  >Submit</button>
+    </ng-template>
+
+</nz-modal>
+</form>
+</div>

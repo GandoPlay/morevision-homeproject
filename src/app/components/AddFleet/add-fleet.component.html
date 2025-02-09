@@ -1,0 +1,37 @@
+<div>
+<button nz-button nzType="primary"  (click)="openModal()">Add Fleet</button>
+<form nz-form [formGroup]="validateForm" (ngSubmit)="HandleSubmit()">
+
+<nz-modal [nzFooter]="modalFooter" [(nzVisible)]="isVisible" nzTitle=" fleet" (nzOnCancel)="handleCancel()">
+
+    <ng-container *nzModalContent>
+        <nz-form-item> 
+                <nz-form-control [nzSpan]="20">
+                    <nz-form-item> 
+
+                    <nz-form-label [nzSpan]="20" nzFor="name">name</nz-form-label>
+                    <nz-form-control [nzSpan]="20" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="modeErrorTpl">
+                    <input nz-input formControlName="name" name="name" type="text" id="name" [value]="fleet.name" [(ngModel)]="fleet.name" />
+                    <ng-template #modeErrorTpl let-control>
+                    
+                        @if (control.errors?.['required']) {
+                          Model is required
+                        }
+                      </ng-template>
+                    </nz-form-control>
+                </nz-form-item>
+
+                    
+                 
+                </nz-form-control>
+            </nz-form-item>
+    </ng-container>
+    <ng-template #modalFooter>
+
+        <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+        <button nz-button nzType="primary" [disabled]="!validateForm.valid" type="submit" (click) ="HandleSubmit()">Submit</button>
+    </ng-template>
+
+</nz-modal>
+</form>
+</div>

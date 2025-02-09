@@ -1,0 +1,32 @@
+
+@if (!dataset|| dataset.length === 0) {
+  <h2 >no data found</h2>
+} 
+@for (item of dataset; track item) {
+ <h1>{{item.name}}</h1>
+
+<div class="table-container">
+ 
+
+<nz-table #basicTable [nzData]="item.vehicles">
+  <thead>
+    <tr>
+      <th>licensePlate</th>
+      <th>model</th>
+      <th>manufacturer</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (vehicle of basicTable.data; track vehicle) {
+      <tr>
+        <td>{{ vehicle.licensePlate }}</td>
+        <td>{{ vehicle.model }}</td>
+        <td>{{ vehicle.manufacturer }}</td>
+
+          <nz-divider nzType="vertical"></nz-divider>
+      </tr>
+    }
+  </tbody>
+</nz-table>
+</div>
+}

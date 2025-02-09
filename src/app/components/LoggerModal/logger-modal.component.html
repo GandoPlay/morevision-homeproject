@@ -1,0 +1,24 @@
+<button nz-button [nzType]="'primary'" (click)="showModal(vehicle.id)"><span>Show history logs</span></button>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="history log" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+
+    <nz-table #basicTable [nzData]="historyLogs">
+      <thead>
+        <tr>
+          <th>previous Status</th>
+          <th>New Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (log of basicTable.data; track log) {
+          <tr>
+            <td>{{ log.previousStatus }}</td>
+            <td>{{ log.newStatus }}</td>
+            <td>{{ log.createdAt }}</td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  </ng-container>
+</nz-modal>

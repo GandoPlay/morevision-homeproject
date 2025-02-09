@@ -1,0 +1,71 @@
+<router-outlet></router-outlet>
+ 
+<a>  
+  <a href="/prefix">Navigate to Prefix "111"</a>
+</a>
+<div>
+  <h2>Select Fleet</h2>
+ 
+ 
+ <nz-select  nzShowSearch nzAllowClear nzPlaceHolder="Select a Fleet" [(ngModel)]="selectedFleetId" (ngModelChange)="onSelectionChange($event)">
+  @for (fleet of fleets; track fleets) {
+    <nz-option 
+    [nzLabel]="fleet.name" 
+    [nzValue]="fleet.id"
+  />
+    }
+</nz-select>
+<br/>
+
+
+
+<h2>status</h2>
+<nz-select ngModel="NONE" (ngModelChange)="onStatusChange($event)">
+  <nz-option  nzValue="ACTIVE" nzLabel="Active"></nz-option>
+  <nz-option nzValue="INACTIVE" nzLabel="InActive"></nz-option>
+  <nz-option nzValue="NONE" nzLabel="Not Selected"></nz-option>
+
+</nz-select> 
+<br/>
+<h2>Add Vehicle To Fleet</h2>
+<add-modal [fleetId]="selectedFleetId" (dataFetched)="updateVehicles($event)" ></add-modal>
+<br/>
+<add-fleet (dataFetched)="updateFleets($event)"></add-fleet>
+</div>
+<div class="table-container">
+ 
+
+<nz-table #basicTable [nzData]="vehicles">
+  <thead>
+    <tr>
+      <th>licensePlate</th>
+      <th>model</th>
+      <th>manufacturer</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (vehicle of basicTable.data; track vehicle) {
+      <tr>
+        <td>{{ vehicle.licensePlate }}</td>
+        <td>{{ vehicle.model }}</td>
+        <td>{{ vehicle.manufacturer }}</td>
+        <td>
+          <nz-select  [ngModel]="vehicle.status" (ngModelChange)="onStatusLogChange($event, vehicle.id)">
+            <nz-option  nzValue="ACTIVE" nzLabel="Active"></nz-option>
+            <nz-option nzValue="INACTIVE" nzLabel="InActive"></nz-option>
+          </nz-select>
+
+          <edit-modal [vehicle]="vehicle" [fleetId]="selectedFleetId" (dataFetched)="updateVehicles($event)" ></edit-modal>
+          
+          <logger-modal [vehicle]="vehicle"></logger-modal>
+
+          
+          <nz-divider nzType="vertical"></nz-divider>
+          <button (click)="Delete(vehicle.id)">Delete</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</nz-table>
+</div>
