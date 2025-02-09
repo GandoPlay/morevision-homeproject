@@ -1,0 +1,35 @@
+services:
+  # PostgreSQL DB for API
+  tour-viz-db:
+    image: postgres:13
+    ports:
+      - 5434:5434
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: nest
+
+
+
+  # Backend service (NestJS API)
+  api:
+    build:
+      context: ./api
+      dockerfile: dockerfile
+    ports:
+      - 3001:3001
+
+    depends_on:
+      - tour-viz-db
+   
+
+  # Frontend service (Angular Web)
+  web:
+    build:
+      context: ./web
+    ports:
+      - 80:80
+    depends_on:
+      - api
+   
+
